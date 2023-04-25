@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-//import java.util.concurrent.RunnableFuture;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,34 +28,59 @@ public class MainActivity extends AppCompatActivity {
         runTimer();
     }
 
+    //if the activity paused, stop the stopwatch
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wasRunning = running;
+        running = false;
+
+    }
+
+    //if the activity resumed, start the stopwatch
+    // again if it was running previously
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(wasRunning){
+            running = true;
+        }
+    }
+    //Save the state of the stopwatch if it’s about to be destroyed.
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running",running);
         savedInstanceState.putBoolean("wasRunning", wasRunning);
-
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        wasRunning = running;
+    //this get start when the start button clicked
+    public void onClickStart(View view){
+        running = true; //start the stop watch running
+    }
+
+    //this get start when the stop button clicked
+    public void onClickStop(View view){
+        running= false;//stop the stop watch running
+    }
+
+    //this get start when the reset button clicked
+    public void onClickReset(View view){
+        //start the stop watch running and set the seconds to zero
         running = false;
+        seconds = 0;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(wasRunning) running = true;
-    }
 
-    //sets the number of seconds in timer
+    //sets the number of seconds in the timer
     private void runTimer(){
 
         //get the text view
        final TextView timeView = (TextView) findViewById(R.id.time_view);
 
+       //The runTimer() method uses a Handler to increment
+        // the seconds and update the text view.
        final Handler handler = new Handler();
 
         //use handler to post code
@@ -80,21 +104,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    //this get start when the start button clicked
-    public void onClickStart(View view){
-        running = true; //start the stop watch running
-    }
-
-    //this get start when the stop button clicked
-    public void onClickStop(View view){
-        running= false;//stop the stop watch running
-    }
-
-    //this get start when the reset button clicked
-    public void onClickReset(View view){
-        //start the stop watch running and set the seconds to zero
-        running = false;
-        seconds = 0;
-    }
 }
