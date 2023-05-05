@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(savedInstanceState!= null){
-          seconds = savedInstanceState.getInt("seconds");
-          running = savedInstanceState.getBoolean("running");
-          wasRunning = savedInstanceState.getBoolean("wasRunning");
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
         }
         runTimer();
     }
@@ -77,30 +77,30 @@ public class MainActivity extends AppCompatActivity {
     private void runTimer(){
 
         //get the text view
-       final TextView timeView = (TextView) findViewById(R.id.time_view);
+        final TextView timeView = (TextView) findViewById(R.id.time_view);
 
-       //The runTimer() method uses a Handler to increment
+        //The runTimer() method uses a Handler to increment
         // the seconds and update the text view.
-       final Handler handler = new Handler();
+        final Handler handler = new Handler();
 
         //use handler to post code
-       handler.post(new Runnable() {
-           @Override
-           public void run() {
-               int hours = seconds / 3600;
-               int minutes = (seconds % 3660) / 60;
-               int secs = seconds % 60;
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int hours = seconds / 3600;
+                int minutes = (seconds % 3660) / 60;
+                int secs = seconds % 60;
 
-               @SuppressLint("DefaultLocale") String time = String.format("%d:%02d:%02d", hours, minutes, secs);
-               timeView.setText(time);
+                @SuppressLint("DefaultLocale") String time = String.format("%d:%02d:%02d", hours, minutes, secs);
+                timeView.setText(time);
 
-               if (running) {
-                   seconds++;
-               }
-               handler.postDelayed(this, 1000);
-           }
+                if (running) {
+                    seconds++;
+                }
+                handler.postDelayed(this, 1000);
+            }
 
-       });
+        });
 
     }
 
