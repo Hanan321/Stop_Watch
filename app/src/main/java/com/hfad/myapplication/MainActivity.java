@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // the seconds and update the text view.
        final Handler handler = new Handler();
 
-        //use handler to post code
+        //use handler to post code.
        handler.post(new Runnable() {
            @Override
            public void run() {
